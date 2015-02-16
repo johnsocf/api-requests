@@ -7,11 +7,19 @@
 	<link href="style.css" rel="stylesheet" type="text/css"/>
 </head>	
 <body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-	<ul class="images">
+
+	<ul class="template">
 
 	</ul>
-	<script type="text/javascript" src="instagram.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/instagram.js"></script>
+	<script type="text/javascript" src="js/handlebars-v3.0.0.js"></script>
 </body>
 </html>
+
+<script id="title-template" type="text/x-handlebars-template">
+	<div class="description">
+	<h1>{{title}}</h1>
+	</div>
+</script>
