@@ -36,9 +36,14 @@ function setupTemplate (newData) {
   console.log('new data id' + newData.id);
   console.log(template);
 
-  var context = {title: newData.id }
+  var context = {
+    title: newData.id,
+    avgCadence: data.average_cadence,
+    avgWatts: data.average_watts
+  }
   template(context);
   $('.template').append(template(context));
+  console.log(newData)
   
   // console.log("average cadence: " + data.average_cadence);
   // console.log("average speed: " + data.average_speed);
