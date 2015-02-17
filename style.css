@@ -1,0 +1,49 @@
+
+.strava-template {
+	color: #ffffff;
+}
+
+.strava-template h1 {
+	font-size: 70px;
+	margin: 0;
+}
+
+.strava-template ul {
+	list-style: none;
+	font-size: 60px;
+	margin: 0;
+	font-weight: bold;
+}
+
+.strava-template li {
+	opacity: .4;
+}
+
+.insta-template {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+}
+
+.insta-template a {
+	width: auto;
+	height: auto;
+	float: left;
+}
+
+.insta-template {
+	padding: 10;
+}
+
+.strava-template {
+	padding: 20;
+}
+
+#chart, #chart svg {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+body {margin: 0;}
