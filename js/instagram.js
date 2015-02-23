@@ -55,7 +55,7 @@ function setupStravaTemplate (newData) {
   }
   template(context);
   $('.strava-template').append(template(context));
-  graphData(newData);
+  parseData(newData);
 }
 
 function setupInstaTemplate (newData) {
@@ -72,16 +72,8 @@ function setupInstaTemplate (newData) {
   setWidths(newData);
 }
 
-function setWidths (newData) {
-  var width = newData.images.standard_resolution.width - 20;
-  var height = newData.images.standard_resolution.height - 20;
-
-  $('.strava-template').css("height", height + "px");
-  $('.strava-template').css("width", width + "px");
-}
-
-function graphData (newData) {
-  var margin = { top: 30, bottom: 40, left: 50, right: 30 }
+function parseData (newData) {
+  console.log(newData);
   var bardata = [
     { yHeight: newData.average_cadence,
       name: 'average cadence'
@@ -319,8 +311,22 @@ function graphData (newData) {
       yHeight: newData.average_speed,
       name: 'average speed'
     }
-  ],
-  height = 400 - margin.top - margin.bottom,
+  ];
+  //graphDataInBarChart(newData);
+  graphDataInPieChart(bardata);
+}
+
+function setWidths (newData) {
+  var width = newData.images.standard_resolution.width - 20;
+  var height = newData.images.standard_resolution.height - 20;
+
+  $('.strava-template').css("height", height + "px");
+  $('.strava-template').css("width", width + "px");
+}
+
+function graphDataInBarChart (bardata) {
+  var margin = { top: 30, bottom: 40, left: 50, right: 30 }
+  var height = 400 - margin.top - margin.bottom,
   width = 600 - margin.left - margin.right, 
   barWidth = 50,
   barOffset = 5
@@ -454,5 +460,60 @@ function graphData (newData) {
             .style({fill: 'none', stroke: "#000"})
       hGuide.selectAll('line')
             .style({stroke: "#000"})
+
+}
+
+function graphDataInPieChart(bardata) {
+  var width = 400,
+      height = 400,
+      radius = 200,
+      colors = d3.scale.ordinal()
+          .range(['#595AB7','#A57706','#D11C24','#C61C6F','#BD3613','#2176C7','#259286','#738A05']);
+
+  heightArray = [];
+  for (var i=0; i < bardata.length; i++) {
+    heightArray.push(bardata[i].yHeight);
+  }
+
+  var pie = d3.layout.pie()
+      .value(function(d){
+        return d.yHeight;
+      })
+
+  var arc = d3.svg.arc()
+      .outerRadius(radius)
+      console.log(bardata);
+
+ var myChart = d3.select('#chart').append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .append('g')
+    .attr('transform', 'translate('+(width-radius)+','+(height-radius)+')')
+    .selectAll('path').data(pie(bardata))
+    .enter().append('g')
+        .attr('class', 'slice')
+        
+
+  var slices = d3.selectAll('g.slice')
+        .append('path')
+        .attr('fill', function(d, i) {
+            return colors(i);
+        })
+        .style('opacity', '.5')
+        .attr('d', arc)
+
+  var text = d3.selectAll('g.slice')
+      .append('text')
+      .text(function(d, i) {
+        console.log(d);
+        return d.data.name;
+      })
+      .attr('text-anchor', 'middle')
+      .attr('fill', 'white')
+      .attr('transform', function(d) {
+        d.innerRadius = 0;
+        d.outerRadius = radius;
+        return 'translate(' + arc.centroid(d) +')'
+      })
 
 }
