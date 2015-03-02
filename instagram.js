@@ -19,14 +19,56 @@ function stravaRequest (next_url, count) {
         success: function(data) {
            var newData = data[0];
            console.log(data);
-           for (key in newData) {
-                //console.log(key + " : " + newData[key]);
-           }
-           setupStravaTemplate(newData);
+
+           parseOutData(data);
+           
+           //setupStravaTemplate(newData);
         },
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
+}
+
+function parseOutData(data) {
+  var dataObj = {
+    run: [],
+    swim: [],
+    ride: []
+  }
+  var run = [],
+      swim = [],
+      ride = [];
+
+  for (key in data) {
+    //console.log(key + " : " + data[key].type);
+    var day = Date.parse(data[key].start_date);
+    var date = new Date(day);
+    //console.log(date);
+    //console.log(date.getDay());
+
+    switch(data[key].type) {
+      case "Run":
+        dataObj.run.push(data[key]);
+        break;
+      case "Swim":
+        dataObj.swim.push(data[key]);
+        break;
+      case "Ride":
+        dataObj.ride.push(data[key]);
+        break;
+      default:
+        console.log("sorry, we are out of " + data[key].type + ".");
+    }
+  }
+
+  console.log(dataObj);
+
+  // for (var i=0; i < run.length; i++) {
+  //   console.log(run[i]);
+  //   console.log(run[i].type);
+  //   console.log(run[i].start_date);
+  // }
+
 }
 
 function instaRequest (next_url, count) {
