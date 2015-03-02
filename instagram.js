@@ -18,18 +18,17 @@ function stravaRequest (next_url, count) {
         //jsonpCallback: "jsonpcallback",
         success: function(data) {
            var newData = data[0];
-           console.log(data);
+           //console.log(data[0]);
 
-           parseOutData(data);
+           parseOutData(data, newData);
            
-           //setupStravaTemplate(newData);
         },
         error: function(jqXHR, textStatus, errorThrown) {
         }
     });
 }
 
-function parseOutData(data) {
+function parseOutData(data, newData) {
   var dataObj = {
     run: [],
     swim: [],
@@ -61,7 +60,10 @@ function parseOutData(data) {
     }
   }
 
-  console.log(dataObj);
+  //console.log(dataObj);
+
+  
+  setupStravaTemplate(newData, dataObj);
 
   // for (var i=0; i < run.length; i++) {
   //   console.log(run[i]);
@@ -79,14 +81,14 @@ function instaRequest (next_url, count) {
     data: {},
     success: function(data) {
       var instaData = data.data[0];
-      console.log(data);
+      //console.log(data);
       setupInstaTemplate(instaData);
     }
   });
 }
 
-function setupStravaTemplate (newData) {
-  
+function setupStravaTemplate (newData, dataObj) {
+  //console.log(newData);
   var source = $('#strava-template').html();
   var template = Handlebars.compile(source);
   var context = {
@@ -97,7 +99,8 @@ function setupStravaTemplate (newData) {
   }
   template(context);
   $('.strava-template').append(template(context));
-  parseData(newData);
+  //parseData(newData);
+  graphDataInPieChart(dataObj);
 }
 
 function setupInstaTemplate (newData) {
@@ -114,250 +117,250 @@ function setupInstaTemplate (newData) {
   setWidths(newData);
 }
 
-function parseData (newData) {
-  console.log(newData);
-  var bardata = [
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    },
-    { yHeight: newData.average_cadence,
-      name: 'average cadence'
-     },
-    {
-      yHeight: newData.average_watts,
-      name: 'average watts'
-    },
-    {
-      yHeight: newData.average_speed,
-      name: 'average speed'
-    }
-  ];
-  //graphDataInBarChart(newData);
-  //graphDataInPieChart(bardata);
-  graphDataInForce(bardata);
-}
+// function parseData (newData) {
+//   console.log(newData);
+//   var bardata = [
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     },
+//     { yHeight: newData.average_cadence,
+//       name: 'average cadence'
+//      },
+//     {
+//       yHeight: newData.average_watts,
+//       name: 'average watts'
+//     },
+//     {
+//       yHeight: newData.average_speed,
+//       name: 'average speed'
+//     }
+//   ];
+//   //graphDataInBarChart(newData);
+//   //graphDataInPieChart(bardata);
+//   graphDataInForce(bardata);
+// }
 
 function setWidths (newData) {
   var width = newData.images.standard_resolution.width - 20;
@@ -506,7 +509,7 @@ function graphDataInBarChart (bardata) {
 
 }
 
-function graphDataInPieChart(bardata) {
+function graphDataInPieChart(dataObj) {
   var width = 400,
       height = 400,
       radius = 200,
@@ -514,29 +517,61 @@ function graphDataInPieChart(bardata) {
           .range(['#595AB7','#A57706','#D11C24','#C61C6F','#BD3613','#2176C7','#259286','#738A05']);
 
   heightArray = [];
-  for (var i=0; i < bardata.length; i++) {
-    heightArray.push(bardata[i].yHeight);
+  console.log(dataObj);
+  for (key in dataObj) {
+    console.log(key);
+    //console.log(dataObj[key]);
+    //for (var i=0; i < key; i++) {
+      switch(key) {
+        case "run":
+          var run = {
+            'frequency': dataObj[key].length,
+            'type': key
+          }
+          heightArray.push(run);
+          break;
+        case "swim":
+          var swim = {
+            'frequency': dataObj[key].length,
+            'type': key
+          }
+          heightArray.push(swim);
+          break;
+        case "ride":
+          var ride = {
+            'frequency': dataObj[key].length,
+            'type': key
+          }
+          heightArray.push(ride);
+          break;
+        default:
+          console.log("sorry, we are out of " + key[i] + ".");
+      }
+      console.log(heightArray)
+      //console.log(heightArray);
+      //heightArray.push(dataObj[i].yHeight);
+    //}
   }
-
+  
   var pie = d3.layout.pie()
       .value(function(d){
-        return d.yHeight;
+        //console.log(d);
+        return d.frequency;
       })
 
   var arc = d3.svg.arc()
       .outerRadius(radius)
-      console.log(bardata);
+     // console.log(dataObj);
 
- var myChart = d3.select('#chart').append('svg')
+  var myChart = d3.select('#chart').append('svg')
     .attr('width', width)
     .attr('height', height)
     .append('g')
     .attr('transform', 'translate('+(width-radius)+','+(height-radius)+')')
-    .selectAll('path').data(pie(bardata))
+    .selectAll('path').data(pie(heightArray))
     .enter().append('g')
         .attr('class', 'slice')
         
-
   var slices = d3.selectAll('g.slice')
         .append('path')
         .attr('fill', function(d, i) {
@@ -549,7 +584,7 @@ function graphDataInPieChart(bardata) {
       .append('text')
       .text(function(d, i) {
         console.log(d);
-        return d.data.name;
+        return d.data.type;
       })
       .attr('text-anchor', 'middle')
       .attr('fill', 'white')
